@@ -30,8 +30,7 @@ async function app() {
       response.write(JSON.stringify({Error: 'Not found'}))
     }
   
-    response.end()
-  
+    response.end()  
   }).listen(3000);
 }
 
