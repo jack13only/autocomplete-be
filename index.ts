@@ -1,4 +1,4 @@
-import { createAutoComplete } from "../auto-complete/script"
+import { createAutoComplete } from "./script"
 import http from "http";
 import url from 'url';
 import { readFile } from 'fs/promises';
