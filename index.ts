@@ -2,18 +2,17 @@ import { createAutoComplete } from "./script"
 import http from "http";
 import url from 'url';
 import { readFile } from 'fs/promises';
+import cities from './cities.json';
 
-async function createCompleteFunc() {
-  const data = await readFile('./cities.json');
-  const cities: Array<string> = await JSON.parse(data.toString());
-  return createAutoComplete(cities);
-}
- 
-async function app() {
-  const automplete:(prefix: string) => string[] | [] = await createCompleteFunc()
+const PORT = process.env.PORT || 80
 
-  http.createServer(async function(request, response){
+  const automplete:(prefix: string) => string[] | [] = createAutoComplete(cities)
   
+  http.createServer(async function(request, response){
+    
+    // const data = readFile('./cities.json');
+    // const cities: Array<string> = JSON.parse(data.toString());
+
     if (request.url === undefined) throw new Error('url is not url')
     const urlQueries = url.parse(request.url, true);
   
@@ -31,7 +30,4 @@ async function app() {
     }
   
     response.end()  
-  }).listen(3000);
-}
-
-app()
+  }).listen(PORT);
